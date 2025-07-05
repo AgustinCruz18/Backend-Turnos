@@ -121,7 +121,28 @@ exports.reservar = async (req, res) => {
     }
 };
 
+exports.reservarTurnoDirecto = async (req, res) => {
+    const { turnoId, pacienteId, obraSocial } = req.body;
 
+    try {
+        const turno = await Turno.findById(turnoId);
+        if (!turno) return res.status(404).json({ msg: 'Turno no encontrado' });
+
+        if (turno.estado !== 'disponible') {
+            return res.status(400).json({ msg: 'El turno ya está ocupado' });
+        }
+
+        turno.estado = 'ocupado';
+        turno.paciente = pacienteId;
+        turno.obraSocialUsada = obraSocial;
+        await turno.save();
+
+        res.status(200).json({ msg: 'Turno reservado con éxito' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Error al reservar turno' });
+    }
+};
 exports.eliminar = async (req, res) => {
     try {
         const turno = await Turno.findByIdAndDelete(req.params.id);
