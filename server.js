@@ -35,7 +35,7 @@ app.use('/api/medicos', medicoRoutes);
 app.use('/api/horarios', horarioRoutes);
 app.use('/api/turnos', turnoRoutes);
 app.use('/api/mercadopago', mercadoPagoRoutes);
-app.use('/api/turnos', require('./routes/turnosRoutes'));
+
 
 // Función para crear el administrador si no existe
 async function crearAdminSiNoExiste() {
