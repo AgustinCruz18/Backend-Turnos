@@ -1,4 +1,3 @@
-// backend-turnos/controllers/mercadoPagoController.js
 const axios = require('axios');
 require('dotenv').config();
 
@@ -11,7 +10,7 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
     const { idTurno, obra_social, payer_email } = req.body;
 
     const descuentosObraSocial = {
-      "OSDE": 0.3,
+      "OSDE": 1,
       "Swiss Medical": 0.25,
       "IOSFA": 0.2,
       "Otra": 0.1,
@@ -27,17 +26,21 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
     const descuento = descuentosObraSocial[obra_social] || 0;
     const precioFinal = parseFloat((precioBase * (1 - descuento)).toFixed(2));
 
-    // ✅ Código actualizado para el body de la preferencia de pago
+    // ✅ Si es 100% cubierto, no genera preferencia de pago
+    if (precioFinal === 0) {
+      return res.status(200).json({ init_point: null, msg: 'Turno con cobertura total, no se requiere pago' });
+    }
+
     const body = {
-      payer_email, // Usamos el email real del pagador
+      payer_email,
       items: [{
         title: `Reserva de turno médico`,
         description: `Obra social: ${obra_social}`,
         quantity: 1,
         unit_price: precioFinal
       }],
-      metadata: { // Añadimos los metadatos para incluir el idTurno
-        idTurno: idTurno // Pasa el idTurno como metadato
+      metadata: {
+        idTurno: idTurno
       },
       back_urls: {
         success: "https://turnos-psw.netlify.app/pago/estatus",
