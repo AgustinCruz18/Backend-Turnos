@@ -40,9 +40,9 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
         idTurno: idTurno // Pasa el idTurno como metadato
       },
       back_urls: {
-        success: "https://6dfa-2803-cf00-12fd-8600-b9da-2d5a-93d-db71.ngrok-free.app/pago/exitoso",
-        failure: "https://6dfa-2803-cf00-12fd-8600-b9da-2d5a-93d-db71.ngrok-free.app/pago/fallido",
-        pending: "https://6dfa-2803-cf00-12fd-8600-b9da-2d5a-93d-db71.ngrok-free.app/pago/pendiente"
+        success: "https://delightful-monstera-f8a123.netlify.app/pago/exitoso",
+        failure: "https://delightful-monstera-f8a123.netlify.app/pago/fallido",
+        pending: "https://delightful-monstera-f8a123.netlify.app/pago/pendiente"
       },
       auto_return: "approved"
     };
