@@ -13,13 +13,22 @@ passport.use(new GoogleStrategy({
         console.log('Google Profile:', profile);
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
-            user = await User.create({
-                googleId: profile.id,
-                nombre: profile.displayName,
-                email: profile.emails?.[0]?.value || `noemail-${profile.id}@fake.com`,
-                rol: 'paciente'
-            });
-            console.log('Usuario creado con Google:', user);
+            // Buscar por email si ya existe uno registrado
+            const existingByEmail = await User.findOne({ email: profile.emails?.[0]?.value });
+            if (existingByEmail) {
+                // Actualizar su googleId si está logueando con Google por primera vez
+                existingByEmail.googleId = profile.id;
+                await existingByEmail.save();
+                user = existingByEmail;
+            } else {
+                // Crear nuevo usuario
+                user = await User.create({
+                    googleId: profile.id,
+                    nombre: profile.displayName,
+                    email: profile.emails?.[0]?.value || `noemail-${profile.id}@fake.com`,
+                    rol: 'paciente'
+                });
+            }
         } else {
             console.log('Usuario ya existente:', user);
         }
