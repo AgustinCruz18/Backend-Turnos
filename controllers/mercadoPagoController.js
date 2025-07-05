@@ -30,6 +30,10 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
     if (precioFinal === 0) {
       return res.status(200).json({ init_point: null, msg: 'Turno con cobertura total, no se requiere pago' });
     }
+    if (precioFinal === 0) {
+      // 👉 No generamos preferencia para precio 0
+      return res.status(200).json({ init_point: null });
+    }
 
     const body = {
       payer_email,
