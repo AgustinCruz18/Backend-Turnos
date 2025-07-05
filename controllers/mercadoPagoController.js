@@ -11,7 +11,7 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
 
     const descuentosObraSocial = {
       "OSDE": 1,
-      "Swiss Medical": 0.25,
+      "Swiss Medical": 0.998,
       "IOSFA": 0.2,
       "Otra": 0.1,
       "Particular": 0
