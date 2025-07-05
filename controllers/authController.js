@@ -1,4 +1,4 @@
-//backend-turnos/controllers/authController.js
+// backend-turnos/controllers/authController.js
 const jwt = require('jsonwebtoken');
 
 exports.googleCallback = async (req, res) => {
@@ -9,6 +9,7 @@ exports.googleCallback = async (req, res) => {
         rol: req.user.rol
     }, process.env.JWT_SECRET);
 
-    const redirectUrl = `http://localhost:4200?token=${token}`;
+    // Redirige al frontend en Netlify
+    const redirectUrl = `https://turnos-psw.netlify.app/dashboard-paciente/${req.user._id}?token=${token}`;
     res.redirect(redirectUrl);
 };
