@@ -40,9 +40,9 @@ mercadoPagoCtrl.generarPago = async (req, res) => {
         idTurno: idTurno // Pasa el idTurno como metadato
       },
       back_urls: {
-        success: "https://delightful-monstera-f8a123.netlify.app/pago/exitoso",
-        failure: "https://delightful-monstera-f8a123.netlify.app/pago/fallido",
-        pending: "https://delightful-monstera-f8a123.netlify.app/pago/pendiente"
+        success: "https://turnos-psw.netlify.app/pago/estatus",
+        failure: "https://turnos-psw.netlify.app/pago/estatus",
+        pending: "https://turnos-psw.netlify.app/pago/estatus"
       },
       auto_return: "approved"
     };
